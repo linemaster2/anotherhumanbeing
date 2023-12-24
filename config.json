@@ -1,0 +1,10 @@
+{
+    "DiscordToken": "your discord token goes here",
+    "DiscordChannel": "the channel id where the bot should talk in",
+    "ChatModel": "your chat model here, current ones are Character AI, Cleverbot and SimSimi",
+    "CharacterAI": {
+        "Token": "your c.ai token goes here, not needed if LoginType is set to guest",
+        "LoginType": "Token",
+        "CharacterID": "your c.ai character id goes in here"
+    }
+}
