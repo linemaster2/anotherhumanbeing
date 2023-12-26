@@ -5,7 +5,7 @@ ive finally decided to finish this project.
 
 to install are the required modules simply run 
 ```
-npm i node_characterai axios clerverbot-free
+npm i node_characterai axios clerverbot-free discord.js-selfbot-v13
 ```
 in terminal or cmd whatever
 
