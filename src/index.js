@@ -10,7 +10,6 @@ code *may* look ugly
 const DiscordAuth = require("./modules/DiscordAuth.js");
 const config = require("../config.json");
 const caiauth = require("./modules/CharacterAIAuth.js");
-const acl = require("./modules/Acl.js");
 const chat = require("./modules/Chat.js");
 
 // classes
@@ -24,7 +23,6 @@ let isAuthenticated = false;
 // create the clients
 const CharacterAiClient = CharacterAiAuth.CreateCharacterAiClient();
 const DiscordClient = DCAuth.CreateNewClient();
-const Acl = new acl(DiscordClient);
 
 // the main messageCreate event
 DiscordClient.on("messageCreate", (message) => {
@@ -50,13 +48,6 @@ DiscordClient.on("messageCreate", (message) => {
     }
 });
 
-// dis the message event for the acl
-DiscordClient.on("messageCreate", (message) => {
-    if (config.ACL) {
-        Acl.SaveACL(message.channel);
-    }
-});
-
 // do stuff when logged in
 DiscordClient.on("ready", () => {
     console.log(`logged in as: ${DiscordClient.user.username}`)
@@ -72,6 +63,25 @@ DiscordClient.on("ready", () => {
         } catch(error) {
             console.log(`an error while trying to authenticate with character.ai: ${error}`);
         }
+    }
+
+    const interval = 60000;
+    const decreaseAmount = 3;
+    const channels = this.client.channels.cache;
+
+    if (config.ACL) {
+        channels.forEach(channel => {
+            channel.activitylevel = channel.activitylevel || 10;
+        });
+        setInterval(() => {
+            const channels = client.channels.cache;
+            channels.forEach(channel => {
+                channel.activitylevel = channel.activitylevel || 10;
+                if (channel.activitylevel > 5) {
+                    channel.activitylevel -= decreaseAmount;
+                }
+            });
+        }, interval);
     }
 });
 
